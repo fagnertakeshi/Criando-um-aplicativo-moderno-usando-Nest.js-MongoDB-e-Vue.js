@@ -46,7 +46,6 @@
             class="form-control"
             placeholder="Entre com o cep"
             v-on:change="load_cep"
-            @blur="load_cep"
           />
         </div>
         <div class="form-group col-md-12">
@@ -164,38 +163,37 @@ export default {
         router.push({ name: "Home" });
       });
     },
-  },
+    load_cep() {
+      var url_cep;
+      console.log("entrei aqui");
 
-  load_cep() {
-    var url_cep;
+      this.cep = this.cep.trim().replace(/[^0-9]/g, "");
 
-    if (event) {
-      event.preventDefault();
-    }
+      console.log("entrei aqui");
 
-    this.cep = this.cep.trim().replace(/[^0-9]/g, "");
+      url_cep = "https://viacep.com.br/ws/" + this.cep + "/json";
 
-    console.log("entrei aqui");
+      // clear all headers axios to viacep
+      axios.defaults.headers.common = null;
 
-    url_cep = "https://viacep.com.br/ws/" + this.cep + "/json";
+      console.log(url_cep);
 
-    // clear all headers axios to viacep
-    axios.defaults.headers.common = null;
-
-    axios
-      .get(url_cep)
-      .then(
-        function (response) {
-          this.rua = response.data.logradouro;
-          this.complemento = response.data.complemento;
-          this.bairro = response.data.bairro;
-          this.estado = response.data.uf;
-          this.cidade = response.data.localidade;
-        }.bind(this)
-      )
-      .catch(function (error) {
-        console.log(error.statusText);
-      });
+      axios
+        .get(url_cep)
+        .then(
+          function (response) {
+            console.log(response.data.logradouro);
+            this.rua = response.data.logradouro;
+            this.complemento = response.data.complemento;
+            this.bairro = response.data.bairro;
+            this.estado = response.data.uf;
+            this.cidade = response.data.localidade;
+          }.bind(this)
+        )
+        .catch(function (error) {
+          console.log(error.statusText);
+        });
+    },
   },
 };
 </script>
