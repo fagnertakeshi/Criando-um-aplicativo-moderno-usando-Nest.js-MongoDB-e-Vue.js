@@ -11,69 +11,114 @@
       <h2>Edit user</h2>
       <form id="create-post-form" @submit.prevent="edituser">
         <div class="form-group col-md-12">
-          <label for="first_name">First Name</label>
+          <label for="nome">Nome</label>
           <input
             type="text"
-            id="first_name"
-            v-model="user.first_name"
-            name="title"
+            id="nome"
+            v-bind:value="user.nome"
+            v-on:input="$emit('user.nome', $event.target.value)"
+            name="nome"
             class="form-control"
-            placeholder="Enter firstname"
+            placeholder=""
           />
         </div>
         <div class="form-group col-md-12">
-          <label for="last_name">Last Name</label>
+          <label for="idade">Idade</label>
           <input
             type="text"
-            id="last_name"
-            v-model="user.last_name"
-            name="title"
+            id="idade"
+            v-model="user.idade"
+            name="idade"
             class="form-control"
-            placeholder="Enter Last name"
+            placeholder=""
           />
         </div>
         <div class="form-group col-md-12">
-          <label for="email">Email</label>
+          <label for="github_user">Usuário Github</label>
           <input
             type="text"
-            id="email"
-            v-model="user.email"
-            name="title"
+            id="github_user"
+            v-model="user.github_user"
+            name="github_user"
             class="form-control"
-            placeholder="Enter email"
+            placeholder=""
           />
         </div>
         <div class="form-group col-md-12">
-          <label for="phone_number">Phone</label>
+          <label for="cep">CEP</label>
           <input
             type="text"
-            id="phone_number"
-            v-model="user.phone"
-            name="title"
+            id="cep"
+            v-model="user.cep"
+            name="cep"
             class="form-control"
-            placeholder="Enter Phone number"
+            placeholder=""
           />
         </div>
         <div class="form-group col-md-12">
-          <label for="address">Address</label>
+          <label for="rua">Endereco</label>
           <input
             type="text"
-            id="address"
-            v-model="user.address"
-            name="title"
+            id="rua"
+            v-model="user.rua"
+            name="rua"
             class="form-control"
-            placeholder="Enter Address"
+            placeholder=""
           />
         </div>
         <div class="form-group col-md-12">
-          <label for="description">Description</label>
+          <label for="numero">Número</label>
           <input
             type="text"
-            id="description"
-            v-model="user.description"
-            name="description"
+            id="numero"
+            v-model="user.numero"
+            name="numero"
             class="form-control"
-            placeholder="Enter Description"
+            placeholder=""
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="complemento">Complemento</label>
+          <input
+            type="text"
+            id="complemento"
+            v-model="user.complemento"
+            name="complemento"
+            class="form-control"
+            placeholder=""
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="bairro">Bairro</label>
+          <input
+            type="text"
+            id="bairro"
+            v-model="user.bairro"
+            name="bairro"
+            class="form-control"
+            placeholder=""
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="cidade">Cidade</label>
+          <input
+            type="text"
+            id="cidade"
+            v-model="user.cidade"
+            name="cidade"
+            class="form-control"
+            placeholder=""
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="estado">Estado</label>
+          <input
+            type="text"
+            id="estado"
+            v-model="user.estado"
+            name="estado"
+            class="form-control"
+            placeholder=""
           />
         </div>
         <div class="form-group col-md-4 pull-right">
@@ -101,13 +146,18 @@ export default {
   methods: {
     edituser() {
       let userData = {
-        first_name: this.user.first_name,
-        last_name: this.user.last_name,
-        email: this.user.email,
-        phone: this.user.phone,
-        address: this.user.address,
-        description: this.user.description,
+        nome: this.nome,
+        idade: this.idade,
+        github_user: this.github_user,
+        numero: this.numero,
+        cep: this.cep,
+        rua: this.rua,
+        complemento: this.complemento,
+        bairro: this.bairro,
+        cidade: this.cidade,
+        estado: this.estado,
       };
+      console.log(this.id);
       axios
         .put(`${server.baseURL}/user/update?userID=${this.id}`, userData)
         .then((data) => {

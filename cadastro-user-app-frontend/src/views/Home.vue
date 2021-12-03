@@ -40,7 +40,22 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group" style="margin-bottom: 20px">
                   <router-link
-                    :to="{ name: 'Edit', params: { id: user._id } }"
+                    :to="{
+                      name: 'Edit',
+                      params: {
+                        id: user._id,
+                        nome: user.nome,
+                        idade: user.idade,
+                        gihub_user: user.github_user,
+                        cep: user.cep,
+                        rua: user.rua,
+                        numero: user.numero,
+                        complemento: user.complemento,
+                        bairro: user.bairro,
+                        cidade: user.cidade,
+                        estado: user.estado,
+                      },
+                    }"
                     class="btn btn-sm btn-outline-secondary"
                     >Edit user</router-link
                   >
