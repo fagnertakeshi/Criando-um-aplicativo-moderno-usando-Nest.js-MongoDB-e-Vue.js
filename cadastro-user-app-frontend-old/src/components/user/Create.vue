@@ -1,0 +1,166 @@
+<template>
+  <div>
+    <div class="col-md-12 form-wrapper">
+      <h2>Create User</h2>
+      <form id="create-post-form" @submit.prevent="createUser">
+        <div class="form-group col-md-12">
+          <label for="name">Nome</label>
+          <input
+            type="text"
+            id="name"
+            v-model="name"
+            name="title"
+            class="form-control"
+            placeholder="Entre com o Nome"
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="idade">Idade</label>
+          <input
+            type="text"
+            id="idade"
+            v-model="idade"
+            name="title"
+            class="form-control"
+            placeholder="Entre com a idade"
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="github_user">Usuário GitHub</label>
+          <input
+            type="text"
+            id="github_user"
+            v-model="github_user"
+            name="title"
+            class="form-control"
+            placeholder="Entre com o usuário GitHub"
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="cep">CEP</label>
+          <input
+            type="text"
+            id="cep"
+            v-model="cep"
+            name="title"
+            class="form-control"
+            placeholder="Entre com o cep"
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="rua">Endereço</label>
+          <input
+            type="text"
+            id="rua"
+            v-model="rua"
+            name="title"
+            class="form-control"
+            placeholder="Entre com Endereço."
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="numero">Número</label>
+          <input
+            type="text"
+            id="numero"
+            v-model="numero"
+            name="numero"
+            class="form-control"
+            placeholder=""
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="complemento">Complemento</label>
+          <input
+            type="text"
+            id="complemento"
+            v-model="complemento"
+            name="complemento"
+            class="form-control"
+            placeholder=""
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="bairro">Bairro</label>
+          <input
+            type="text"
+            id="bairro"
+            v-model="bairro"
+            name="bairro"
+            class="form-control"
+            placeholder=""
+          />
+        </div>
+         <div class="form-group col-md-12">
+          <label for="cidade">Cidade</label>
+          <input
+            type="text"
+            id="cidade"
+            v-model="cidade"
+            name="cidade"
+            class="form-control"
+            placeholder=""
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="estado">Estado</label>
+          <input
+            type="text"
+            id="estado"
+            v-model="estado"
+            name="estado"
+            class="form-control"
+            placeholder=""
+          />
+        </div>
+        <div class="form-group col-md-4 pull-right">
+          <button class="btn btn-success" type="submit">Create User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+import axios from "axios";
+import { server } from "../../helper";
+import router from "../../router";
+export default {
+  data() {
+    return {
+      name: "",
+      idade: "",
+      github_user: "",
+      cep: "",
+      rua: "",
+      numero: "",
+      complemento: "",
+      bairro: "",
+      cidade: "",
+      estado: "",
+    };
+  },
+  methods: {
+    createUser() {
+      let userData = {
+        name: this.name,
+        idade: this.last_name,
+        github_user: this.github_user,
+        cep:this.cep,
+        rua:this.rua,
+        complemento:this.complemento,
+        bairro:this.bairro,
+        cidade:this.cidade,
+        estadp:this.estado,
+      };
+      this.__submitToServer(userData);
+    },
+    __submitToServer(data) {
+      console.log(`${server.baseURL}/user/create`);
+      axios.post(`${server.baseURL}/user/create`, data).then((data) => {
+        console.log(data);
+        router.push({ name: "Home" });
+      });
+    },
+  },
+};
+</script>
