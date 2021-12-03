@@ -45,6 +45,8 @@
             name="title"
             class="form-control"
             placeholder="Entre com o cep"
+            v-on:change="load_cep"
+            @blur="load_cep"
           />
         </div>
         <div class="form-group col-md-12">
@@ -162,6 +164,38 @@ export default {
         router.push({ name: "Home" });
       });
     },
+  },
+
+  load_cep() {
+    var url_cep;
+
+    if (event) {
+      event.preventDefault();
+    }
+
+    this.cep = this.cep.trim().replace(/[^0-9]/g, "");
+
+    console.log("entrei aqui");
+
+    url_cep = "https://viacep.com.br/ws/" + this.cep + "/json";
+
+    // clear all headers axios to viacep
+    axios.defaults.headers.common = null;
+
+    axios
+      .get(url_cep)
+      .then(
+        function (response) {
+          this.rua = response.data.logradouro;
+          this.complemento = response.data.complemento;
+          this.bairro = response.data.bairro;
+          this.estado = response.data.uf;
+          this.cidade = response.data.localidade;
+        }.bind(this)
+      )
+      .catch(function (error) {
+        console.log(error.statusText);
+      });
   },
 };
 </script>
