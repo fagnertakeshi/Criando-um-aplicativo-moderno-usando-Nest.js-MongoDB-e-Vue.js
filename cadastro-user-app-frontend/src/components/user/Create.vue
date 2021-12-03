@@ -34,6 +34,18 @@
             name="title"
             class="form-control"
             placeholder="Entre com o usuário GitHub"
+            v-on:change="load_git"
+          />
+        </div>
+        <div class="form-group col-md-12">
+          <label for="github_id">GitHub ID</label>
+          <input
+            type="text"
+            id="github_id"
+            v-model="github_id"
+            name="title"
+            class="form-control"
+            placeholder=""
           />
         </div>
         <div class="form-group col-md-12">
@@ -131,6 +143,7 @@ export default {
       nome: "",
       idade: "",
       github_user: "",
+      github_id: "",
       cep: "",
       rua: "",
       numero: "",
@@ -165,12 +178,7 @@ export default {
     },
     load_cep() {
       var url_cep;
-      console.log("entrei aqui");
-
       this.cep = this.cep.trim().replace(/[^0-9]/g, "");
-
-      console.log("entrei aqui");
-
       url_cep = "https://viacep.com.br/ws/" + this.cep + "/json";
 
       // clear all headers axios to viacep
@@ -182,12 +190,30 @@ export default {
         .get(url_cep)
         .then(
           function (response) {
-            console.log(response.data.logradouro);
             this.rua = response.data.logradouro;
             this.complemento = response.data.complemento;
             this.bairro = response.data.bairro;
             this.estado = response.data.uf;
             this.cidade = response.data.localidade;
+          }.bind(this)
+        )
+        .catch(function (error) {
+          console.log(error.statusText);
+        });
+    },
+    load_git() {
+      var url_git;
+
+      axios.defaults.headers.common = null;
+
+      url_git = "https://api.github.com/search/users?q=" + this.github_user;
+
+      console.log(url_git);
+      axios
+        .get(url_git)
+        .then(
+          function (response) {
+            this.github_id = response.data.items[0].id;
           }.bind(this)
         )
         .catch(function (error) {
